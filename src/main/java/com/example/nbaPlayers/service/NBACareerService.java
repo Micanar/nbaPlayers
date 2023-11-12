@@ -3,6 +3,9 @@ package com.example.nbaPlayers.service;
 import com.example.nbaPlayers.model.Player;
 import com.example.nbaPlayers.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +18,9 @@ public class NBACareerService {
     private PlayerRepository playerRepository;
 
     public List<Player> getLongestCareers() {
-        List<Player> top20LongestCareers = playerRepository.findLongestCareers();
-        return top20LongestCareers.stream().limit(20).collect(Collectors.toList());
+        Pageable pageable = PageRequest.of(0,20);
+        List<Player> top20LongestCareers = playerRepository.findLongestCareers(pageable);
+        return top20LongestCareers;
     }
 }
 
